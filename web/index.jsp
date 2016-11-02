@@ -20,6 +20,7 @@
         <form method="POST" action="Servlet" > 
             <select id="selector" name="selector">
                 <%
+                    //Rellena el selector con la lista de los alumnos.
                     response.setContentType("text/html;charset=UTF-8");
                     AccesoAlumnos alumnos = new AccesoAlumnos();
                     ArrayList<Alumno> listaAlumnos = alumnos.getListaAlumnos();

@@ -57,22 +57,22 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
 
-        String codi = request.getParameter("selector");
+        String codi = request.getParameter("selector"); //Extrae el parámetro del selector.
         response.setContentType("text/html;charset=UTF-8");
         AccesoAlumnos aa = new AccesoAlumnos();
         ArrayList<Alumno> auxlist = aa.getListaAlumnos();
         boolean trobat = false;
         Alumno al = new Alumno();
 
-        for (int i = 0; (i < auxlist.size()) && (trobat == false); i++) {
+        for (int i = 0; (i < auxlist.size()) && (trobat == false); i++) { //Compara el parámetro del selector hasta que encuentra un alumno con ese código.
             String auxS = "" + auxlist.get(i).getCodi() + "";
             if (auxS.equals(codi)) {
                 trobat = true;
                 al = auxlist.get(i);
             }
         }
-
-        request.setAttribute("alumno", al);
+        //Devuelve el alumno encontrado al jsp.
+        request.setAttribute("alumno", al); 
         RequestDispatcher a = request.getRequestDispatcher("/datosAl.jsp");
         a.forward(request, response);
     }
