@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/C:/Users/juanj/OneDrive/Documentos/NetBeansProjects/AD%202.0%20Sevlet/src/java/Ficheros/AlumnosXSD.xsd" uri="src/conf/xml-resources/jaxb/AlumnosJAXB/AlumnosXSD.xsd"/>
+    <system systemId="file:/C:/Users/juanj/OneDrive/Documentos/NetBeansProjects/AD%202.0%20Sevlet/src/java/Ficheros/AlumnosXSD.xsd" uri="src/conf/xml-resources/jaxb/Alumnos/AlumnosXSD.xsd"/>
 </catalog>

@@ -5,15 +5,19 @@ package AccesoDatos;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import JAXB.XMLJAXB;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static java.lang.System.out;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.RequestDispatcher; 
+import javax.servlet.ServletContext;
+import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 /**
  *
@@ -38,10 +42,15 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-        }
 
+        AccesoAlumnos alumnos = new AccesoAlumnos();
+        ArrayList<Alumno> listaAlumnos = alumnos.getListaAlumnos();
+      
+        request.setAttribute("listaAlumnos", listaAlumnos);
+        
+        ServletContext context= getServletContext();
+        RequestDispatcher rd= context.getRequestDispatcher("/formAl.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -55,26 +64,27 @@ public class Servlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
 
         String codi = request.getParameter("selector"); //Extrae el parámetro del selector.
-        response.setContentType("text/html;charset=UTF-8");
         AccesoAlumnos aa = new AccesoAlumnos();
         ArrayList<Alumno> auxlist = aa.getListaAlumnos();
         boolean trobat = false;
         Alumno al = new Alumno();
+        String json = "{\"error\": \"No se ha encontrado el alumno con código "+codi+" \"}";
 
         for (int i = 0; (i < auxlist.size()) && (trobat == false); i++) { //Compara el parámetro del selector hasta que encuentra un alumno con ese código.
             String auxS = "" + auxlist.get(i).getCodi() + "";
             if (auxS.equals(codi)) {
                 trobat = true;
                 al = auxlist.get(i);
+                Gson gson = new Gson();
+                json = gson.toJson(al);
             }
         }
-        //Devuelve el alumno encontrado al jsp.
-        request.setAttribute("alumno", al); 
-        RequestDispatcher a = request.getRequestDispatcher("/datosAl.jsp");
-        a.forward(request, response);
+        
+        response.setContentType("application/json");
+        response.getWriter().write(json);
     }
 
     /**

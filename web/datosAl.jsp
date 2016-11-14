@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    Alumno al = (Alumno) request.getAttribute("alumno");
+    Alumno al = (Alumno) request.getAttribute("alumno");     
 %>
 <html>
     <head>
@@ -16,6 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <a href="Servlet">Volver atrás</a>
         <h1>Informacion del alumno:</h1>
         Alumno:  <%out.println(al.getNom());%><br>
         Código:  <%out.println(al.getCodi()); %><br>
